@@ -48,6 +48,8 @@ const Login = ({
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log("Base URL:", import.meta.env.VITE_API_BASE_URL);
+    console.log("Full URL:", `${import.meta.env.VITE_API_BASE_URL}/auth/login`);
     try {
       setInvalidCredentials(false);
       setError(false);
@@ -142,14 +144,14 @@ const Login = ({
             )}
             <Button
               type="submit"
-              className="rounded-xl w-full text-xl bg-sky-600"
+              className="rounded-xl w-full text-xl bg-custom-blue"
             >
               Login
             </Button>
             <p>
               Don't have an account?{' '}
               <Link to="/signup" className="font-bold text-sky-900 underline">
-                Sign up!
+                Sign up here!
               </Link>
             </p>
           </form>
