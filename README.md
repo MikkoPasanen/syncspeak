@@ -16,7 +16,7 @@ CI/CD pipeline which builds and pushes a new build to Microsoft Azure when pushi
 ## Usage
 
 ### <ins>Cloud</ins>
-<a href="https://chatter-front.icyforest-5106bef0.northeurope.azurecontainerapps.io/login">Live</a> on Microsoft Azure (loading might take a while since the container needs to boot up if its in sleeping state)
+<a href="https://syncspeak.blackrock-52ee4819.northeurope.azurecontainerapps.io/">Live</a> on Microsoft Azure (loading might take a while since the container needs to boot up if its in sleeping state)
 
 ## Pictures
 
