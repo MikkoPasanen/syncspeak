@@ -53,9 +53,9 @@ const Login = ({
       setError(false);
 
       const response = await axios.post(
-        import.meta.env.VITE_API_BASE_URL + '/auth/login',
-        values,
-        { withCredentials: true },
+          `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
+          values,
+          { withCredentials: true }
       );
 
       if (response.status === 200) {

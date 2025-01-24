@@ -55,8 +55,8 @@ const Signup = () => {
       setError(false);
 
       const response = await axios.post(
-        import.meta.env.VITE_API_BASE_URL + '/auth/signup',
-        values,
+          `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
+          values
       );
 
       if (response.status == 200) navigate('/login');
