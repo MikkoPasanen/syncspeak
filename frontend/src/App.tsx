@@ -48,7 +48,7 @@ function App() {
       <div className="flex items-center justify-center min-h-screen font-bold">
         Loading...
       </div>
-    ); // Or a spinner/loading indicator
+    );
   }
 
   return (
