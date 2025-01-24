@@ -55,7 +55,7 @@ const Signup = () => {
       setError(false);
 
       const response = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
+          `${import.meta.env.VITE_API_BASE_URL}/auth/signup`,
           values
       );
 
@@ -145,7 +145,7 @@ const Signup = () => {
             <p>
               Already have an account?{' '}
               <Link to="/login" className="font-bold text-sky-900 underline">
-                Login here!
+                Login!
               </Link>
             </p>
           </form>

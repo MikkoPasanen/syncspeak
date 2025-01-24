@@ -18,14 +18,9 @@ function App() {
 
   useEffect(() => {
     const checkAuthentication = async () => {
-      console.log("Base URL:", import.meta.env.VITE_API_BASE_URL);
-      console.log(
-          "Full URL:",
-          `${import.meta.env.VITE_API_BASE_URL}/auth/login`
-      );
       try {
         const response: AxiosResponse = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
+          `${import.meta.env.VITE_API_BASE_URL}/auth/verify-token`,
           {},
           { withCredentials: true },
         );
