@@ -46,6 +46,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     }
 
+    // Extract token from the Http request
     public String extractToken(HttpServletRequest request) {
         System.out.println("extractToken called");
         Cookie[] cookies = request.getCookies();

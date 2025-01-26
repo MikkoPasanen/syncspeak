@@ -3,10 +3,6 @@ import Sidebar from '../components/Sidebar';
 import Navbar from '../components/navbar';
 import Chat from '../components/Chat';
 
-interface User {
-    id: string;
-    username: string;
-}
 const Chatroom = ({
   setIsAuthenticated,
 }: {
