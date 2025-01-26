@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useWebSocket from "../hooks/useWebSocket.ts";
-import axios from "axios";
+// import axios from "axios";
 
 const Chat = ({
     userId,
@@ -14,15 +14,16 @@ const Chat = ({
     const [text, setText] = useState("");
 
     useEffect(() => {
-        // Fetch chat history when component mounts
-        axios
-            .get(`http://localhost:8080/api/chat/${userId}/${receiverId}`)
-            .then((response) => {
-                setOldMessages(response.data); // Store old messages
-            })
-            .catch((error) =>
-                console.error("Error fetching chat history:", error)
-            );
+        // // Fetch chat history when component mounts
+        // axios
+        //     .get(`http://localhost:8080/api/chat/${userId}/${receiverId}`)
+        //     .then((response) => {
+        //         setOldMessages(response.data); // Store old messages
+        //     })
+        //     .catch((error) =>
+        //         console.error("Error fetching chat history:", error)
+        //     );
+        setOldMessages([]);
     }, [userId, receiverId]);
 
     return (
