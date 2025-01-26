@@ -19,6 +19,7 @@ import java.util.UUID;
 public class ChatController {
     private final ChatService chatService;
 
+    // Get chat history between 2 users
     @GetMapping("/{senderId}/{receiverId}")
     public List<Message> getChatHistory(@PathVariable UUID senderId, @PathVariable UUID receiverId) {
         return chatService.getChatHistory(senderId, receiverId);

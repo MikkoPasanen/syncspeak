@@ -17,9 +17,7 @@ const Chatroom = ({
       <div className="flex flex-col items-center justify-center bg-white w-3/4 h-[90vh] rounded-xl shadow-xl rounded-xl">
         <Navbar setIsAuthenticated={setIsAuthenticated} />
         <div className="flex w-full h-full">
-          <Sidebar onSelectUser={function (user: User): void {
-            throw new Error('Function not implemented.');
-          } } currentUserId={''} />
+          <Sidebar />
           <Chat userId={''} receiverId={''} />
         </div>
       </div>

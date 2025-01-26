@@ -6,12 +6,12 @@ interface User {
     username: string;
 }
 
-interface SidebarProps {
-    onSelectUser: (user: User) => void;
-    currentUserId: string;
-}
+// interface SidebarProps {
+//     onSelectUser: (user: User) => void;
+//     currentUserId: string;
+// }
 
-const Sidebar = ({ onSelectUser, currentUserId }: SidebarProps) => {
+const Sidebar = () => {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -39,7 +39,7 @@ const Sidebar = ({ onSelectUser, currentUserId }: SidebarProps) => {
       };
 
       fetchAllUsers();
-    }, [currentUserId]);
+    }, []);
 
     if (loading) {
         return (
@@ -57,7 +57,7 @@ const Sidebar = ({ onSelectUser, currentUserId }: SidebarProps) => {
                     <li
                         key={user.id}
                         className="p-2 cursor-pointer hover:bg-gray-200 rounded-lg"
-                        onClick={() => onSelectUser(user)}
+
                     >
                         {user.username}
                     </li>
