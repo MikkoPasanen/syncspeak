@@ -1,10 +1,9 @@
 package syncspeak.backend.controller;
 
-import syncspeak.backend.entity.Role;
 import syncspeak.backend.entity.User;
-import syncspeak.backend.request.LoginRequest;
-import syncspeak.backend.request.SignUpRequest;
-import syncspeak.backend.response.LoginResponse;
+import syncspeak.backend.entity.request.LoginRequest;
+import syncspeak.backend.entity.request.SignUpRequest;
+import syncspeak.backend.entity.response.LoginResponse;
 import syncspeak.backend.service.AuthService;
 import syncspeak.backend.service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,7 +35,7 @@ public class AuthController {
         User newUser = new User();
         newUser.setUsername(req.getUsername());
         newUser.setPassword(passwordEncoder.encode(req.getPassword()));
-        newUser.setRole(Role.USER.name());
+        newUser.setRole("USER");
 
         authService.saveUser(newUser);
 
