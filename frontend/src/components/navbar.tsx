@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+// Cheer messages for only the admin to see :)
 const cheerMessages: string[] = [
   'Well done!',
   '10/10!',
@@ -41,6 +42,7 @@ const Navbar = ({
 }) => {
   const navigate = useNavigate();
 
+  // Logout the user and clear cookies
   const logout = async () => {
     try {
       const response: AxiosResponse = await axios.post(
@@ -88,6 +90,7 @@ const Navbar = ({
               </Button>
             </PopoverContent>
           </Popover>
+          {/* If the admin is logged in, show him a cheer message */}
           {localStorage.getItem('username') === 'Admin' &&
             localStorage.getItem('role') === 'ADMIN' && (
               <p className="text-white mr-5 mt-2">{`Dear ${localStorage.getItem('username')}, ${cheerMessages[Math.floor(Math.random() * cheerMessages.length)]}`}</p>
