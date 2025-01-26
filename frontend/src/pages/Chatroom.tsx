@@ -6,9 +6,6 @@ import Chat from '../components/Chat';
 interface User {
     id: string;
     username: string;
-    password: string;
-    role: string;
-    created_at: string;
 }
 const Chatroom = ({
   setIsAuthenticated,
