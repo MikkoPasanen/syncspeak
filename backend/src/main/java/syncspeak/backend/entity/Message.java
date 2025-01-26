@@ -1,7 +1,6 @@
 package syncspeak.backend.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,25 +10,27 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "users")
+@Table(name = "messages")
 @RequiredArgsConstructor
-public class User {
+public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true, nullable = false)
-    private String username;
+    @ManyToOne
+    @JoinColumn(name = "sender_id", nullable = false)
+    private User sender;
+
+    @ManyToOne
+    @JoinColumn(name = "receiver_id", nullable = false)
+    private User receiver;
 
     @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
-    private String role;
+    private String content;
 
     @CreationTimestamp
-    @Column(updatable = false, nullable = false, name = "created_at")
-    private Date createdAt;
+    @Column(updatable = false, nullable = false)
+    private Date timestamp;
 
 }
