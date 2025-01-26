@@ -34,11 +34,13 @@ const Login = ({
   const [invalidCredentials, setInvalidCredentials] = useState<boolean>(false);
   const navigate = useNavigate();
 
+  // Zod schema to validate form input
   const formSchema = z.object({
     username: z.string().nonempty('Username is required'),
     password: z.string().nonempty('Password is required'),
   });
 
+  // Initialize the form with react-hook-form and zod resolver
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,19 +49,20 @@ const Login = ({
     },
   });
 
+  // When user clicks "Login" button
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("Base URL:", import.meta.env.VITE_API_BASE_URL);
-    console.log("Full URL:", `${import.meta.env.VITE_API_BASE_URL}/auth/login`);
     try {
       setInvalidCredentials(false);
       setError(false);
 
+      // Send request to backend
       const response = await axios.post(
           `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
           values,
           { withCredentials: true }
       );
 
+      // If everything is OK, store data to localstorage and go to Chat page
       if (response.status === 200) {
         localStorage.setItem('username', response.data.username);
         localStorage.setItem('role', response.data.role);
@@ -67,8 +70,10 @@ const Login = ({
         navigate('/chat');
       }
     } catch (error: unknown) {
+      // If password or username is wrong
       if (axios.isAxiosError(error) && error.response?.status === 401)
         setInvalidCredentials(true);
+      // If other error happened
       else setError(true);
     }
   };

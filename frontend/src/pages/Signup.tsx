@@ -30,6 +30,7 @@ const Signup = () => {
   const [userExists, setUserExists] = useState(false);
   const navigate = useNavigate();
 
+  // Zod schema to validate form input
   const formSchema = z.object({
     username: z
       .string()
@@ -41,6 +42,7 @@ const Signup = () => {
       .min(8, 'Password must be at least 8 characters long'),
   });
 
+  // Initialize the form with react-hook-form and zod resolver
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,11 +51,13 @@ const Signup = () => {
     },
   });
 
+  // When user clicks "Sign up" button
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setUserExists(false);
       setError(false);
 
+      // Send request to backend
       const response = await axios.post(
           `${import.meta.env.VITE_API_BASE_URL}/auth/signup`,
           values
@@ -61,8 +65,10 @@ const Signup = () => {
 
       if (response.status == 200) navigate('/login');
     } catch (error: unknown) {
+      // If user already exists in the database
       if (axios.isAxiosError(error) && error.response?.status === 400)
         setUserExists(true);
+      // Some other error happened
       else setError(true);
     }
   };
