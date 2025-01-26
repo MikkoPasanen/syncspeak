@@ -3,7 +3,7 @@ package syncspeak.backend.service;
 import syncspeak.backend.entity.User;
 import syncspeak.backend.exception.UserAlreadyExistsException;
 import syncspeak.backend.exception.UserNotFoundException;
-import syncspeak.backend.filter.JwtFilter;
+import syncspeak.backend.config.filter.JwtFilter;
 import syncspeak.backend.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
