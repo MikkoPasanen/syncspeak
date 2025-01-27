@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 
-const useWebSocket = (userId: string) => {
+const useWebSocket = (receiverId: string) => {
     const [client, setClient] = useState<Client | null>(null);
     const [messages, setMessages] = useState<any[]>([]);
+    const userId: string = localStorage.getItem("id") || "";
 
     useEffect(() => {
         const stompClient = new Client({
