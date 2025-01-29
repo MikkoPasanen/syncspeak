@@ -6,15 +6,12 @@ interface User {
     username: string;
 }
 
-// interface SidebarProps {
-//     onSelectUser: (user: User) => void;
-//     currentUserId: string;
-// }
-
 const Sidebar = ({
     setReceiverId,
+    setReceiverName
 }: {
     setReceiverId: (value: string) => void;
+    setReceiverName: (value: string) => void;
 }) => {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -54,14 +51,14 @@ const Sidebar = ({
     }
 
     return (
-        <div className="w-1/4 bg-gray-100 p-4 border-r border-gray-300">
-            <h2 className="text-xl font-semibold mb-4">Users</h2>
+        <div className="w-1/4 bg-custom-dark-2 p-4 border-r border-gray-300 rounded-bl-xl">
+            <h2 className="text-2xl font-semibold mb-4 text-white text-center">Users</h2>
             <ul>
-                {users.map((user) => (
+                {users.filter(user => user.username !== localStorage.getItem("username")).map((user) => (
                     <li
                         key={user.id}
-                        className="p-2 cursor-pointer hover:bg-gray-200 rounded-lg"
-                        onClick={() => setReceiverId(user.id)}
+                        className="p-2 cursor-pointer hover:bg-custom-dark-4 rounded text-white"
+                        onClick={() => { setReceiverId(user.id); setReceiverName(user.username); }}
                     >
                         {user.username}
                     </li>
