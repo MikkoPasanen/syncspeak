@@ -61,44 +61,55 @@ const Navbar = ({
   };
 
   return (
-    <div className="w-full">
-      <div className="bg-sky-600 py-5 flex justify-between items-center rounded-t-xl">
-        <h1 className="font-bold text-3xl text-white ml-5">SyncSpeak</h1>
-        <div className="flex flex-col items-end">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Avatar className="mr-5 hover:cursor-pointer">
-                <AvatarFallback className="border-black border-2 font-bold">
-                  {localStorage.getItem('username')?.at(0)?.toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-            </PopoverTrigger>
-            <PopoverContent className="w-64 flex flex-col items-center">
-              <p>
-                Signed in as{' '}
-                <span className="font-bold">
-                  {localStorage.getItem('username')}
-                </span>
-              </p>
-              <Button
-                variant={'destructive'}
-                size={'sm'}
-                className="rounded mt-5"
-                onClick={() => logout()}
-              >
-                Log out
-              </Button>
-            </PopoverContent>
-          </Popover>
-          {/* If the admin is logged in, show him a cheer message */}
-          {localStorage.getItem('username') === 'Admin' &&
-            localStorage.getItem('role') === 'ADMIN' && (
-              <p className="text-white mr-5 mt-2">{`Dear ${localStorage.getItem('username')}, ${cheerMessages[Math.floor(Math.random() * cheerMessages.length)]}`}</p>
-            )}
-        </div>
+      <div className="w-full border-gray-300 border-b">
+          <div className="bg-custom-dark-4 py-5 flex justify-between items-center rounded-t-xl">
+              <h1 className="font-bold text-3xl text-white ml-5">SyncSpeak</h1>
+              <div className="flex flex-col items-end">
+                  <Popover>
+                      <PopoverTrigger asChild>
+                          <Avatar className="mr-5 hover:cursor-pointer">
+                              <AvatarFallback className="border-black border-2 font-bold">
+                                  {localStorage
+                                      .getItem("username")
+                                      ?.at(0)
+                                      ?.toUpperCase()}
+                              </AvatarFallback>
+                          </Avatar>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-64 flex flex-col items-center">
+                          <p>
+                              Signed in as{" "}
+                              <span className="font-bold">
+                                  {localStorage.getItem("username")}
+                              </span>
+                          </p>
+                          <Button
+                              variant={"destructive"}
+                              size={"sm"}
+                              className="rounded mt-5"
+                              onClick={() => logout()}
+                          >
+                              Log out
+                          </Button>
+                      </PopoverContent>
+                  </Popover>
+                  {/* If the admin is logged in, show him a cheer message */}
+                  {localStorage.getItem("username") === "Admin" &&
+                      localStorage.getItem("role") === "ADMIN" && (
+                          <p className="text-white mr-5 mt-2">{`Dear ${localStorage.getItem(
+                              "username"
+                          )}, ${
+                              cheerMessages[
+                                  Math.floor(
+                                      Math.random() * cheerMessages.length
+                                  )
+                              ]
+                          }`}</p>
+                      )}
+              </div>
+          </div>
+          <div></div>
       </div>
-      <div></div>
-    </div>
   );
 };
 
