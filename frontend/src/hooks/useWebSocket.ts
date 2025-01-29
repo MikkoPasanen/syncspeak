@@ -2,22 +2,18 @@ import { useEffect, useState } from "react";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 
-const useWebSocket = (receiverId: string) => {
+const useWebSocket = () => {
     const [client, setClient] = useState<Client | null>(null);
     const [messages, setMessages] = useState<any[]>([]);
     const userId: string = localStorage.getItem("id") || "";
 
     useEffect(() => {
         const stompClient = new Client({
-            webSocketFactory: () => new SockJS("http://localhost:8080/ws"),
+            webSocketFactory: () => new SockJS(`${import.meta.env.VITE_API_BASE_URL}/ws`),
             onConnect: () => {
-                console.log("Connected to WebSocket");
                 stompClient.subscribe("/topic/messages", (message) => {
                     setMessages((prev) => [...prev, JSON.parse(message.body)]);
                 });
-            },
-            onWebSocketClose: (event) => {
-                console.log("WebSocket closed: ", event);
             },
         });
 
@@ -34,9 +30,15 @@ const useWebSocket = (receiverId: string) => {
             destination: "/app/chat",
             body: JSON.stringify({ senderId: userId, receiverId, content }),
         });
+        console.log(JSON.stringify({ senderId: userId, receiverId, content }));
+        console.log(messages);
     };
 
-    return { messages, sendMessage };
+    const clearMessages = () => {
+        setMessages([]);
+    };
+
+    return { messages, sendMessage, clearMessages };
 };
 
 export default useWebSocket;

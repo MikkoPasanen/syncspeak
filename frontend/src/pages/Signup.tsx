@@ -15,7 +15,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 // Other
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
@@ -65,7 +65,7 @@ const Signup = () => {
                 values
             );
 
-            if (response.status == 200) navigate("/login");
+            if (response.status == 201) navigate("/login");
         } catch (error: unknown) {
             // If user already exists in the database
             if (axios.isAxiosError(error) && error.response?.status === 400)
