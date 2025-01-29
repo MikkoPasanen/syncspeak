@@ -18,13 +18,11 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
-    private User sender;
+    private UUID senderId;
 
-    @ManyToOne
     @JoinColumn(name = "receiver_id", nullable = false)
-    private User receiver;
+    private UUID receiverId;
 
     @Column(nullable = false)
     private String content;

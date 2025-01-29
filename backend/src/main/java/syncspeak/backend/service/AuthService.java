@@ -35,13 +35,9 @@ public class AuthService {
 
     public boolean checkIfTokenIsExpired(HttpServletRequest request) {
         String authToken = jwtFilter.extractToken(request);
-        System.out.println("AuthService: " + authToken);
         if(authToken != null && !authToken.isEmpty()) {
-            System.out.println("AuthService: Token was found");
-            System.out.println("AuthService: Token expired: " + jwtService.isTokenExpired(authToken));
             return jwtService.isTokenExpired(authToken);
         }
-        System.out.println("AuthService: Something broke");
         return true;
     }
 }

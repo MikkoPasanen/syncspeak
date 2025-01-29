@@ -31,13 +31,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 if (jwtService.isTokenValid(token, username)) {
-                    System.out.println("JwtFilter: Token is valid");
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             username, null, null
                     );
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-                } else {
-                    System.out.println("JwtFilter: Token was not valid");
                 }
             }
         }
@@ -48,10 +45,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
     // Extract token from the Http request
     public String extractToken(HttpServletRequest request) {
-        System.out.println("extractToken called");
         Cookie[] cookies = request.getCookies();
         if(cookies != null) {
-            System.out.println("Cookies found");
             Optional<Cookie> authCookie = Arrays.stream(cookies)
                     .filter(cookie -> "auth-token".equals(cookie.getName()))
                     .findFirst();
@@ -59,10 +54,7 @@ public class JwtFilter extends OncePerRequestFilter {
             if(authCookie.isPresent()) {
                 return authCookie.get().getValue();
             }
-        } else {
-            System.out.println("extractToken called");
         }
-
         return null;
     }
 }
