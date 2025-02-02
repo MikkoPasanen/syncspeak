@@ -1,16 +1,16 @@
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Chatroom from './pages/Chatroom';
-import ErrorPage from './pages/ErrorPage';
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Chatroom from "./pages/Chatroom";
+import ErrorPage from "./pages/ErrorPage";
 
 import {
   Route,
   BrowserRouter as Router,
   Routes,
   Navigate,
-} from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios, { AxiosResponse, isAxiosError } from 'axios';
+} from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios, { AxiosResponse, isAxiosError } from "axios";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
