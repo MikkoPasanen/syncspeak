@@ -18,7 +18,7 @@ const Chat = ({
     receiverName: string;
 }) => {
     const userId: string = localStorage.getItem("id") || "";
-    const { messages, sendMessage, clearMessages } = useWebSocket();
+    const { messages, sendMessage, clearMessages } = useWebSocket(receiverId);
     const [oldMessages, setOldMessages] = useState<any[]>([]);
     const [loading = true, setLoading] = useState<boolean>(true);
     const [text, setText] = useState<string>("");
