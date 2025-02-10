@@ -14,23 +14,48 @@ const useWebSocket = (receiverId: string) => {
             webSocketFactory: () =>
                 new SockJS(`${import.meta.env.VITE_API_BASE_URL}/ws`),
             onConnect: () => {
-                // Subscribe to user-specific topic when WebSocket connects
+                // Subscribe to the receiver's queue to see their messages in real-time
                 stompClient.subscribe(
                     `/user/${userId}/${receiverId}/queue/messages`,
                     (message) => {
-                        setMessages((prev) => [
-                            ...prev,
-                            JSON.parse(message.body),
-                        ]);
+                        let receivedMessage = JSON.parse(message.body);
+
+                        if (
+                            receivedMessage.senderId !== userId &&
+                            !receivedMessage.hasBeenRead
+                        ) {
+                            stompClient.publish({
+                                destination: "/app/mark-read",
+                                body: JSON.stringify(receivedMessage.id),
+                            });
+
+                            receivedMessage.hasBeenRead = true;
+
+                            setMessages((prev) => [...prev, receivedMessage]);
+                        }
                     }
                 );
+
+                // Subscribe to our own queue to see our own messages in real-time
                 stompClient.subscribe(
                     `/user/${receiverId}/${userId}/queue/messages`,
                     (message) => {
-                        setMessages((prev) => [
-                            ...prev,
-                            JSON.parse(message.body),
-                        ]);
+                        const newMessage = JSON.parse(message.body);
+
+                        // If the message is already in the messages array, update it
+                        setMessages((prev) => {
+                            const messageIndex = prev.findIndex(
+                                (msg) => msg.id === newMessage.id
+                            );
+
+                            if (messageIndex !== -1) {
+                                const updatedMessages = [...prev];
+                                updatedMessages[messageIndex] = newMessage;
+                                return updatedMessages;
+                            } else {
+                                return [...prev, newMessage];
+                            }
+                        });
                     }
                 );
             },

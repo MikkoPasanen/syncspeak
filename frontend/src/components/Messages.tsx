@@ -89,6 +89,11 @@ const Messages = ({
                                     }
                                 )}
                             </small>
+                            {msg.senderId === userId && (
+                                <small className="text-xs text-gray-400 absolute right-2 bottom-[-15px]">
+                                    {msg.hasBeenRead ? "✓✓ Read" : "✓ Sent"}
+                                </small>
+                            )}
                         </div>
                     </div>
                 );
