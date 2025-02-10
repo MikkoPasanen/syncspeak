@@ -93,7 +93,7 @@ const Chat = ({
             </div>
 
             {/* Input bar at bottom */}
-            <div className="w-full px-5 py-3 flex items-center bg-custom-dark-2">
+            <div className="w-full px-5 py-3 flex items-center">
                 <Input
                     placeholder="Enter text"
                     className="w-full mr-3 rounded"
