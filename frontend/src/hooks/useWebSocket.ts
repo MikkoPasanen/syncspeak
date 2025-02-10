@@ -24,12 +24,18 @@ const useWebSocket = (receiverId: string) => {
                         ]);
                     }
                 );
+                stompClient.subscribe(
+                    `/user/${receiverId}/${userId}/queue/messages`,
+                    (message) => {
+                        setMessages((prev) => [
+                            ...prev,
+                            JSON.parse(message.body),
+                        ]);
+                    }
+                );
             },
             onDisconnect: () => {
                 console.log("Disconnected from WebSocket");
-            },
-            onStompError: (frame) => {
-                console.error("STOMP Error", frame);
             },
         });
 
@@ -44,7 +50,7 @@ const useWebSocket = (receiverId: string) => {
 
     // Send a message to the receiver
     const sendMessage = (receiverId: string, content: string) => {
-        if (!client) return;
+        if (!client || content.length === 0) return;
         client.publish({
             destination: "/app/chat",
             body: JSON.stringify({ senderId: userId, receiverId, content }),
