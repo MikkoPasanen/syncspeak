@@ -25,20 +25,37 @@ const Chat = ({
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView();
+        }
+
         const fetchChatHistory = async () => {
             try {
                 setLoading(true);
                 const response: AxiosResponse = await axios.get(
-                    `${
-                        import.meta.env.VITE_API_BASE_URL
-                    }/api/chat/${userId}/${receiverId}`,
+                    `${import.meta.env.VITE_API_BASE_URL}/api/chat/${userId}/${receiverId}`,
                     { withCredentials: true }
                 );
 
                 if (response.status === 200) {
-                    setOldMessages(response.data);
+                    const fetchedMessages = response.data;
+                    setOldMessages(fetchedMessages);
+
+                    // Find unread messages that were sent by the other user
+                    const unreadMessages = fetchedMessages.filter(
+                        (msg: any) => !msg.hasBeenRead && msg.senderId === receiverId
+                    );
+
+                    // Mark those messages as read
+                    if (unreadMessages.length > 0) {
+                        await axios.post(
+                            `${import.meta.env.VITE_API_BASE_URL}/api/chat/mark-read`,
+                            unreadMessages.map((msg: any) => msg.id),
+                            { withCredentials: true }
+                        );
+                    }
                 }
-            } catch (error: unknown) {
+            } catch (error) {
                 console.error("Error fetching chat history:", error);
             } finally {
                 setLoading(false);
@@ -52,6 +69,7 @@ const Chat = ({
         };
     }, [userId, receiverId]);
 
+
     // Scroll to the bottom whenever the messages change and page is loaded
     useEffect(() => {
         if (messagesEndRef.current) {
@@ -60,10 +78,14 @@ const Chat = ({
     }, [messages, oldMessages]);
 
     return (
-        <div className="w-3/4 flex flex-col bg-custom-dark-3 h-full">
+        <div className="w-3/4 flex flex-col bg-custom-dark-3 h-full rounded-br-xl">
             {/* Chat header */}
-            <div className="bg-custom-dark-2 text-white py-2 text-center w-full">
-                <h1 className="text-2xl">Chat with {receiverName}</h1>
+            <div className="bg-custom-dark-2 text-white py-2 text-center w-full flex justify-between px-5">
+                <h1 className="text-3xl">Chat with {receiverName}</h1>
+                <div className="flex flex-col items-end">
+                    <small>✓ = Sent</small>
+                    <small>✓✓ = Read</small>
+                </div>
             </div>
 
             {/* Message container*/}

@@ -30,9 +30,24 @@ const useWebSocket = (receiverId: string) => {
                             });
 
                             receivedMessage.hasBeenRead = true;
-
-                            setMessages((prev) => [...prev, receivedMessage]);
                         }
+
+                        // If there is a message with the same id, replace it
+                        // this means that we are looking at new messages that we have
+                        // not seen before
+                        setMessages((prev) => {
+                            const messageIndex = prev.findIndex(
+                                (msg) => msg.id === receivedMessage.id
+                            );
+
+                            if (messageIndex !== -1) {
+                                const updatedMessages = [...prev];
+                                updatedMessages[messageIndex] = receivedMessage;
+                                return updatedMessages;
+                            } else {
+                                return [...prev, receivedMessage];
+                            }
+                        });
                     }
                 );
 

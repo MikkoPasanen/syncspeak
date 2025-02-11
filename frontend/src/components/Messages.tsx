@@ -80,6 +80,11 @@ const Messages = ({
                             }`}
                         >
                             <span className="mr-8">{msg.content}</span>
+                                {msg.senderId === userId && (
+                                    <small className="text-xs text-white-600 absolute top-1 right-2">
+                                        {msg.hasBeenRead ? "✓✓" : "✓"}
+                                    </small>
+                                )}
                             <small className="text-xs text-gray-300 absolute right-2 bottom-1">
                                 {new Date(msg.timestamp).toLocaleTimeString(
                                     [],
@@ -89,11 +94,6 @@ const Messages = ({
                                     }
                                 )}
                             </small>
-                            {msg.senderId === userId && (
-                                <small className="text-xs text-gray-400 absolute right-2 bottom-[-15px]">
-                                    {msg.hasBeenRead ? "✓✓ Read" : "✓ Sent"}
-                                </small>
-                            )}
                         </div>
                     </div>
                 );
