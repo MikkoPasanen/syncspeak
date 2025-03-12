@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import syncspeak.backend.entity.Message;
 import syncspeak.backend.service.ChatService;
 
+import java.util.UUID;
+
 @Controller
 @RequiredArgsConstructor
 public class WebSocketChatController {
@@ -16,13 +18,24 @@ public class WebSocketChatController {
     private final SimpMessagingTemplate messagingTemplate;
 
     @MessageMapping("/chat")
-    public Message sendMessage(@Payload Message message) {
+    public void sendMessage(@Payload Message message) {
         chatService.saveMessage(message);
 
         // Send the message to the specific user based on the receiver's UUID
         String destination = "/user/" + message.getReceiverId().toString() + "/" +  message.getSenderId().toString() + "/queue/messages";
         messagingTemplate.convertAndSend(destination, message);
+    }
 
-        return message;
+    @MessageMapping("/mark-read")
+    public void markMessageAsRead(@Payload UUID messageId) {
+        chatService.findById(messageId).ifPresent(message -> {
+            if (!message.isHasBeenRead()) {
+                message.setHasBeenRead(true);
+                chatService.saveMessage(message);
+
+                String destination = "/user/" + message.getReceiverId().toString() + "/" +  message.getSenderId().toString() + "/queue/messages";
+                messagingTemplate.convertAndSend(destination, message);
+            }
+        });
     }
 }

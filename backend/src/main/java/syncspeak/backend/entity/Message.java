@@ -27,6 +27,9 @@ public class Message {
     @Column(nullable = false)
     private String content;
 
+    @Column(nullable = false, name = "has_been_read")
+    private boolean hasBeenRead;
+
     @CreationTimestamp
     @Column(updatable = false, nullable = false)
     private Date timestamp;

@@ -6,8 +6,8 @@ import syncspeak.backend.entity.Message;
 import syncspeak.backend.repository.MessageRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +18,11 @@ public class ChatService {
         return messageRepository.findChatHistory(senderId, receiverId);
     }
 
-    public Message saveMessage(Message message) {
-        return messageRepository.save(message);
+    public void saveMessage(Message message) {
+        messageRepository.save(message);
+    }
+
+    public Optional<Message> findById(UUID messageId) {
+        return messageRepository.findById(messageId);
     }
 }
